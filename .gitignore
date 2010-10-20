@@ -1,0 +1,12 @@
+./.actionScriptProperties
+./.flexLibProperties
+./.project
+./.settings/*
+
+./.DS_STORE
+
+./bin/as3flobile-android.swc
+./lib/*
+
+bin-debug
+bin-debug/*

@@ -1,0 +1,11 @@
+---------------
+CREDIT
+---------------
+
+Graphics uses in as3flobile-android where gratiously cut from a PSD file made available by Pavel Macek.
+
+---------------
+VISIT
+---------------
+
+The original PSD file can be found here: http://www.matcheck.cz/androidguipsd/

@@ -1,0 +1,5 @@
+---------------
+CHANGES
+---------------
+
+toddanderson commented out the dispose() call in the assignBitmapData() function in order to re-use the graphic for resizing.
