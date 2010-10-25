@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: AndroidScrollList.as</p>
- * <p>Version: 0.1</p>
+ * <p>Version: 0.3</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ package com.custardbelly.as3flobile.android.control.list
 	import com.custardbelly.as3flobile.android.control.scrollbar.AndroidScrollBar;
 	import com.custardbelly.as3flobile.android.renderer.AndroidListItemRenderer;
 	import com.custardbelly.as3flobile.android.skin.AndroidListSkin;
-	import com.custardbelly.as3flobile.controls.list.IScrollListDelegate;
 	import com.custardbelly.as3flobile.controls.list.ScrollList;
 	import com.custardbelly.as3flobile.enum.OrientationEnum;
 	
@@ -65,13 +64,11 @@ package com.custardbelly.as3flobile.android.control.list
 		/**
 		 * Static convenience method to create a new instance with initialization properties. 
 		 * @param bounds Rectangle
-		 * @param delegate IScrollListDelegate
 		 * @return AndroidScrollList
 		 */
-		static public function initWithScrollRectAndDelegate( bounds:Rectangle, delegate:IScrollListDelegate = null ):AndroidScrollList
+		static public function initWithScrollRect( bounds:Rectangle ):AndroidScrollList
 		{
 			var list:AndroidScrollList = new AndroidScrollList();
-			list.delegate = delegate;
 			list.width = bounds.width;
 			list.height = bounds.height;
 			return list; 
@@ -206,10 +203,9 @@ package com.custardbelly.as3flobile.android.control.list
 		}
 		
 		/**
-		 * IScrollViewportDelegate implementation for start of scroll animation. 
-		 * @param position Number
+		 * @inherit
 		 */
-		override public function scrollViewDidStart( position:Point ):void
+		override protected function scrollViewDidStart( position:Point ):void
 		{
 			super.scrollViewDidStart( position );
 			if( _requiresVerticalScroll )
@@ -225,10 +221,9 @@ package com.custardbelly.as3flobile.android.control.list
 		}
 		
 		/**
-		 * IScrollViewportDelegate implementation for animation of scroll. 
-		 * @param position Number
+		 * @inherit
 		 */
-		override public function scrollViewDidAnimate( position:Point ):void
+		override protected function scrollViewDidAnimate( position:Point ):void
 		{
 			super.scrollViewDidAnimate( position );
 			
@@ -243,10 +238,9 @@ package com.custardbelly.as3flobile.android.control.list
 		}
 		
 		/**
-		 * IScrollViewportDelegate implementation for end of scroll animation. 
-		 * @param position Number
+		 * @inherit
 		 */
-		override public function scrollViewDidEnd( position:Point ):void
+		override protected function scrollViewDidEnd( position:Point ):void
 		{
 			super.scrollViewDidEnd( position );
 			if( _requiresVerticalScroll ) removeChild( _verticalScrollBar );
