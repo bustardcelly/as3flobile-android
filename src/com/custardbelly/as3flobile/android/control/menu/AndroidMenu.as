@@ -57,6 +57,7 @@ package com.custardbelly.as3flobile.android.control.menu
 	 * Menu is a composite control of submenu panels that are transitioned in and out of view based on display history. 
 	 * @author toddanderson
 	 */
+	// TODO: Extend ModalOverlay.
 	public class AndroidMenu extends AS3FlobileComponent
 	{	
 		protected var _menuPanelList:Vector.<IMenuPanelDisplay>;

@@ -64,7 +64,6 @@ package com.custardbelly.as3flobile.android.control.dialog
 		/**
 		 * Returns signal reference for close of dialog. 
 		 * @return Signal Signal( IAndroidDialog, int )
-		 * 
 		 */
 		function get closeSignal():Signal;
 	}

@@ -90,7 +90,7 @@ package com.custardbelly.as3flobile.android.skin
 		/**
 		 * @inherit
 		 */
-		override protected function updatePosition( width:int, height:int ):void
+		override protected function updateLayout( width:int, height:int ):void
 		{
 			const offset:int = 8;
 			var padding:BoxPadding = _target.padding;

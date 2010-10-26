@@ -105,7 +105,7 @@ package com.custardbelly.as3flobile.android.skin
 		/**
 		 * @inherit
 		 */
-		override protected function updatePosition( width:int, height:int ):void
+		override protected function updateLayout( width:int, height:int ):void
 		{
 			var itemTarget:IScrollListItemRenderer = ( _target as IScrollListItemRenderer );
 			var padding:BoxPadding = _target.padding;

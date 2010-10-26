@@ -83,7 +83,7 @@ package com.custardbelly.as3flobile.android.skin
 		 * @param width Number
 		 * @param height int
 		 */
-		protected function updatePosition( width:Number, height:int ):void
+		protected function updateLayout( width:Number, height:int ):void
 		{
 			var itemTarget:IMenuItemRenderer = ( _target as IMenuItemRenderer );
 			var title:Label = itemTarget.titleDisplay;
@@ -111,7 +111,7 @@ package com.custardbelly.as3flobile.android.skin
 			// Passing in raw width to get accurate sizing of menu item.
 			updateBackground( itemTarget.backgroundDisplay, w, height );
 			updateLabel( itemTarget.titleDisplay, w, height );
-			updatePosition( w, height );
+			updateLayout( w, height );
 		}
 		
 		/**
@@ -126,7 +126,7 @@ package com.custardbelly.as3flobile.android.skin
 			var w:Number = itemTarget.width;
 			updateBackground( itemTarget.backgroundDisplay, w, height );
 			updateLabel( itemTarget.titleDisplay, w, height );
-			updatePosition( w, height );
+			updateLayout( w, height );
 		}
 	}
 }

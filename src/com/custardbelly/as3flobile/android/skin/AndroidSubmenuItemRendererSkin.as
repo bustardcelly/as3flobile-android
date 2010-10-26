@@ -57,7 +57,7 @@ package com.custardbelly.as3flobile.android.skin
 		/**
 		 * @inherit
 		 */
-		override protected function updatePosition( width:Number, height:int ):void
+		override protected function updateLayout( width:Number, height:int ):void
 		{
 			const labelOffset:int = 10;
 			var itemTarget:IMenuItemRenderer = ( _target as IMenuItemRenderer );
