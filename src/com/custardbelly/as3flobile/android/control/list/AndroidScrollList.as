@@ -27,14 +27,20 @@
 package com.custardbelly.as3flobile.android.control.list
 {
 	import com.custardbelly.as3flobile.android.control.scrollbar.AndroidScrollBar;
+	import com.custardbelly.as3flobile.android.helper.ILongPressMediator;
+	import com.custardbelly.as3flobile.android.helper.MouseLongPressMediator;
 	import com.custardbelly.as3flobile.android.renderer.AndroidListItemRenderer;
 	import com.custardbelly.as3flobile.android.skin.AndroidListSkin;
 	import com.custardbelly.as3flobile.controls.list.ScrollList;
 	import com.custardbelly.as3flobile.enum.OrientationEnum;
 	
+	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
+	
+	import org.osflash.signals.Signal;
 	
 	/**
 	 * AndroidScrollList is a convenience control to wire up skins targeting Android look-and-feel. 
@@ -55,6 +61,10 @@ package com.custardbelly.as3flobile.android.control.list
 		
 		protected var _horizontalScrollBar:AndroidScrollBar;
 		protected var _verticalScrollBar:AndroidScrollBar;
+		
+		protected var _longPress:Signal;
+		protected var _longPressEnabled:Boolean;
+		protected var _longPressMediator:ILongPressMediator;
 		
 		/**
 		 * Constructor.
@@ -91,6 +101,9 @@ package com.custardbelly.as3flobile.android.control.list
 			_skin.target = this;
 			
 			_visibleArea = new Rectangle();
+			
+			_longPress = new Signal( int );
+			_longPressMediator = getDefaultLongPressMediator( this, handleLongPress );
 		}
 		
 		/**
@@ -111,7 +124,44 @@ package com.custardbelly.as3flobile.android.control.list
 		}
 		
 		/**
-		 * @inherit
+		 * @private
+		 * 
+		 * Exposed hook fro sublacc to return custom instance of ILongPressMediator. Defaul is MouseLongPressMediator. 
+		 * @param target InteractiveObject The target for the long press mediation session.
+		 * @param handle Function The method handler.
+		 * @return ILongPressMediator
+		 */
+		protected function getDefaultLongPressMediator( target:InteractiveObject, handler:Function ):ILongPressMediator
+		{	
+			var mediator:ILongPressMediator = new MouseLongPressMediator();
+			mediator.longPress.add( handler );
+			return mediator;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function addDisplayHandlers():void
+		{
+			super.addDisplayHandlers();
+			
+			if( _enabled && _selectionEnabled )
+				_longPressMediator.mediateLongPress( this );
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function removeDisplayHandlers():void
+		{
+			super.removeDisplayHandlers();
+			
+			if( _longPressMediator.isMediating( this ) ) 
+				_longPressMediator.unmediateLongPress( this );
+		}
+		
+		/**
+		 * @inheritDoc
 		 */
 		override protected function invalidateSize():void
 		{
@@ -123,7 +173,44 @@ package com.custardbelly.as3flobile.android.control.list
 		}
 		
 		/**
-		 * @inherit
+		 * @private 
+		 * 
+		 * Validates the enablement of long-press gesture recognition.
+		 */
+		protected function invalidateLongPressEnablement():void
+		{
+			if( !_longPressEnabled && _longPressMediator.isMediating( this ) )
+			{
+				_longPressMediator.unmediateLongPress( this );
+			}
+			else if( _longPressEnabled && !_longPressMediator.isMediating( this ) )
+			{
+				if( _enabled && _selectionEnabled ) 
+					_longPressMediator.mediateLongPress( this );
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function invalidateSelectionEnablement():void
+		{
+			super.invalidateSelectionEnablement();
+			if( _longPressMediator.isMediating( _listHolder ) ) 
+			{
+				if( _selectionEnabled )
+				{
+					_longPressMediator.mediateLongPress( _listHolder );
+				}
+				else
+				{
+					_longPressMediator.unmediateLongPress( _listHolder );
+				}
+			}
+		}
+		
+		/**
+		 * @inheritDoc
 		 */
 		override protected function updateDisplay():void
 		{
@@ -245,6 +332,54 @@ package com.custardbelly.as3flobile.android.control.list
 			super.scrollViewDidEnd( position );
 			if( _requiresVerticalScroll ) removeChild( _verticalScrollBar );
 			if( _requiresHorizontalScroll ) removeChild( _horizontalScrollBar );
+		}
+		
+		/**
+		 * @private
+		 * 
+		 * Signal handler for long press recognition from gesture mediator.
+		 */
+		protected function handleLongPress( target:InteractiveObject, xposition:Number, yposition:Number ):void
+		{
+			var index:int = _layout.getChildIndexAtPosition( xposition, yposition );
+			_longPress.dispatch( index );
+		}
+		
+		/**
+		 * @inheritDoc 
+		 */
+		override public function dispose():void
+		{
+			super.dispose();
+			
+			if( _longPressMediator && _longPressMediator.isMediating( _listHolder ) )
+				_longPressMediator.unmediateLongPress( this );
+			
+			_longPressMediator = null;
+		}
+		
+		/**
+		 * Returns signal reference for the selected index within the list based on long press gesture. 
+		 * @return Singal Signal( int )
+		 */
+		public function get longPress():Signal
+		{
+			return _longPress;
+		}
+		
+		/**
+		 * Accessor/Modifier for flag to also recognize long-press gestures. 
+		 * @return Boolean
+		 */
+		public function get longPressEnabled():Boolean
+		{
+			return _longPressEnabled;
+		}
+		public function set longPressEnabled( value:Boolean ):void
+		{
+			if( _longPressEnabled == value ) return;
+			_longPressEnabled = value;
+			invalidateLongPressEnablement();
 		}
 	}
 }
