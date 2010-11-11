@@ -100,7 +100,7 @@ package com.custardbelly.as3flobile.android.control.list
 			_skin = new AndroidListSkin();
 			_skin.target = this;
 			
-			_visibleArea = new Rectangle();
+			_visibleArea = new Rectangle( 0, 0, _width, _height );
 			
 			_longPress = new Signal( int );
 			_longPressMediator = getDefaultLongPressMediator( this, handleLongPress );
@@ -341,7 +341,7 @@ package com.custardbelly.as3flobile.android.control.list
 		 */
 		protected function handleLongPress( target:InteractiveObject, xposition:Number, yposition:Number ):void
 		{
-			var index:int = _layout.getChildIndexAtPosition( xposition, yposition );
+			var index:int = _layout.getChildIndexAtPosition( xposition, -(_listHolder.y) + yposition );
 			_longPress.dispatch( index );
 		}
 		
