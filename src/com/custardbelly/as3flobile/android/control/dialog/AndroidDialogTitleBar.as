@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: AndroidDialogTitleBar.as</p>
- * <p>Version: 0.3</p>
+ * <p>Version: 0.4</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -83,7 +83,16 @@ package com.custardbelly.as3flobile.android.control.dialog
 		}
 		
 		/**
-		 * @inherit
+		 * @inheritDoc
+		 */
+		override protected function updateDisplay():void
+		{
+			_label.draw();
+			super.updateDisplay();
+		}
+		
+		/**
+		 * @inheritDoc
 		 */
 		override protected function invalidateSize():void
 		{
@@ -139,7 +148,7 @@ package com.custardbelly.as3flobile.android.control.dialog
 			if( _title == value ) return;
 			
 			_title = value;
-			invalidateTitle();
+			invalidate( invalidateTitle );
 		}
 	}
 }

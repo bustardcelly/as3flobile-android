@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: DefaultMenuItemRenderer.as</p>
- * <p>Version: 0.3</p>
+ * <p>Version: 0.4</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -108,6 +108,15 @@ package com.custardbelly.as3flobile.android.control.menu.renderer
 			_title.autosize = true;
 			_title.multiline = false;
 			addChild( _title );
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function updateDisplay():void
+		{
+			_title.draw();
+			super.updateDisplay();
 		}
 		
 		/**
@@ -370,7 +379,7 @@ package com.custardbelly.as3flobile.android.control.menu.renderer
 			if( _data == value ) return;
 			
 			_data = value;
-			invalidateData();
+			invalidate( invalidateData );
 		}
 	}
 }

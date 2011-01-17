@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: AndroidTitleBar.as</p>
- * <p>Version: 0.3</p>
+ * <p>Version: 0.4</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ package com.custardbelly.as3flobile.android.control.title
 		public function AndroidTitleBar() { super(); }
 		
 		/**
-		 * @inherit
+		 * @inheritDoc
 		 */
 		override protected function initialize():void
 		{
@@ -63,7 +63,7 @@ package com.custardbelly.as3flobile.android.control.title
 		}
 		
 		/**
-		 * @inherit
+		 * @inheritDoc
 		 */
 		override protected function createChildren():void
 		{
@@ -73,6 +73,15 @@ package com.custardbelly.as3flobile.android.control.title
 			_label.multiline = false;
 			_label.truncate = true;
 			addChild( _label );
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function updateDisplay():void
+		{
+			_label.draw();
+			super.updateDisplay();
 		}
 		
 		/**

@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: Menu.as</p>
- * <p>Version: 0.3</p>
+ * <p>Version: 0.4</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -179,7 +179,7 @@ package com.custardbelly.as3flobile.android.control.menu
 					menuDataProvider[menuDataProvider.length] = getMoreItemClone();
 						
 				menuPanel.dataProvider = menuDataProvider;
-				
+				( menuPanel as AS3FlobileComponent ).draw();
 				startIndex = endIndex;
 				length = ( startIndex + _maximumItemDisplayAmount >= listLength ) ? listLength - startIndex : _maximumItemDisplayAmount - 1;
 			}
@@ -381,6 +381,8 @@ package com.custardbelly.as3flobile.android.control.menu
 		 */
 		public function open( target:DisplayObjectContainer, origin:Point ):void
 		{
+			// Run immediate update on display.
+			draw();
 			if( !isActive() ) _menuHistory.start( target, origin );
 		}
 		
@@ -478,7 +480,7 @@ package com.custardbelly.as3flobile.android.control.menu
 			if( _maximumItemDisplayAmount == value ) return;
 			
 			_maximumItemDisplayAmount = value;
-			invalidateMaximumItemDisplay();
+			invalidate( invalidateMaximumItemDisplay );
 		}
 
 		/**
@@ -495,7 +497,7 @@ package com.custardbelly.as3flobile.android.control.menu
 			
 			_moreMenuItem = value;
 			_moreMenuItemDescription = PropertyUtil.getReadWriteDescription( _moreMenuItem );
-			if( _dataProvider != null ) invalidateDataProvider();
+			if( _dataProvider != null ) invalidateAt( invalidateDataProvider, 0 );
 		}
 		
 		/**
@@ -511,7 +513,7 @@ package com.custardbelly.as3flobile.android.control.menu
 			if( _dataProvider == value ) return;
 			
 			_dataProvider = value;
-			invalidateDataProvider();
+			invalidateAt( invalidateDataProvider, 0 );
 			// If we were previously active in history, restart with new data.
 			if( isActive() ) _menuHistory.restart();
 		}
@@ -533,7 +535,7 @@ package com.custardbelly.as3flobile.android.control.menu
 			// Update config reference and flip property change value.
 			_mainMenuPanelContext = value;
 			_mainMenuPanelContextChanged = true;
-			invalidateConfigurations();
+			invalidate( invalidateConfigurations );
 		}
 		
 		/**
@@ -551,7 +553,7 @@ package com.custardbelly.as3flobile.android.control.menu
 			_submenuPanelContext.dispose();
 			_submenuPanelContext = value;
 			_submenuPanelContextChanged = true;
-			invalidateConfigurations();
+			invalidate( invalidateConfigurations );
 		}
 		
 		/**

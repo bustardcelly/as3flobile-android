@@ -1,7 +1,7 @@
 /**
  * <p>Original Author: toddanderson</p>
  * <p>Class File: MenuPanel.as</p>
- * <p>Version: 0.3</p>
+ * <p>Version: 0.4</p>
  *
  * <p>Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -470,7 +470,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 		{
 			if( _itemRenderer == value ) return;
 			
-			invalidateItemRenderer( _itemRenderer, value );
+			invalidate( invalidateItemRenderer, [_itemRenderer, value] );
 		}
 		
 		/**
@@ -486,7 +486,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 		{
 			if( _itemRendererSkin == value ) return;
 			
-			invalidateItemRendererSkin( _itemRendererSkin, value );
+			invalidate( invalidateItemRendererSkin, [_itemRendererSkin, value] );
 		}
 		
 		/**
@@ -502,7 +502,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 			if( _itemHeight == value ) return;
 			
 			_itemHeight = value;
-			invalidateItemSize();
+			invalidate( invalidateItemSize );
 		}
 		
 		/**
@@ -518,7 +518,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 			if( _itemWidth == value ) return;
 			
 			_itemWidth = value;
-			invalidateItemSize();
+			invalidate( invalidateItemSize );
 		}
 		
 		/**
@@ -534,7 +534,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 		{
 			if( _layout == value ) return;
 			
-			invalidateLayout( _layout, value );
+			invalidate( invalidateLayout, [_layout, value] );
 		}	
 		
 		/**
@@ -550,7 +550,7 @@ package com.custardbelly.as3flobile.android.control.menu.panel
 			if( _dataProvider == value ) return;
 			
 			_dataProvider = value;
-			invalidateDataProvider();
+			invalidate( invalidateDataProvider );
 		}
 	}
 }

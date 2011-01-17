@@ -121,6 +121,7 @@ package com.custardbelly.as3flobile.android.skin
 		{
 			button.width = width;
 			button.height = height;
+			button.draw();
 		}
 		
 		/**
